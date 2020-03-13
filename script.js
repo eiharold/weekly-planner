@@ -1,8 +1,13 @@
-let lists = document.querySelectorAll('ul');
+const lists = document.querySelectorAll('ul');
 let itens = document.querySelectorAll('li');
 const btns = document.querySelectorAll('button');
 const inputs = document.querySelectorAll('input');
 let deletes = document.querySelectorAll('.delete');
+const year = document.querySelector('#year');
+const clearbtn = document.querySelectorAll('h2 span');
+
+let calendar = new Date();
+year.innerHTML = calendar.getFullYear();
 
 // let lista = localStorage.getItem('list') || "";
 // let backupList = [];
@@ -59,7 +64,7 @@ function addTodo(day, todo) {
             if (list.dataset['day'] === day) {
                 let newItem = document.createElement('li');
                 newItem.classList.add('item');
-                newItem.innerHTML = `<span>${todo}</span><a class="delete" href="#">Delete</a>`;
+                newItem.innerHTML = `<span contenteditable="true">${todo}</span><a class="delete" contenteditable="false" href="#">Delete</a>`;
                 list.appendChild(newItem);
                 activeDelete();
                 activeCheck();
@@ -80,6 +85,23 @@ activeDelete();
 
 function handleDel(e) {
     this.parentElement.remove();
+}
+
+
+function activeClearList() {
+    clearbtn.forEach((btn) => {
+        btn.addEventListener('click', handleClear);
+    });
+}
+activeClearList();
+
+function handleClear(e) {
+    let dataTemp = this.dataset['day'];
+    lists.forEach( (list) => {
+        if (dataTemp === list.dataset['day']) {
+            list.innerHTML = "";
+        }
+    })
 }
 
 // function attLists() {

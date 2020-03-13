@@ -14,18 +14,15 @@
     <div class="container">
 
         <div class="container-title">
-            <h1>Weekly Planner</h1>
-            <h3>2020</h3>
+            <h1 contenteditable="true">Weekly Planner</h1>
+            <h3 contenteditable="true" id="year"></h3>
         </div>
 
         <div class="wrap" id="monday">
             <div class="content">
-                <h2>Monday</h2>
+                <h2 contenteditable="true">Monday <span contenteditable="false" data-day="monday">Clear</span></h2>
                 <ul class="list" data-day="monday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="monday">
@@ -35,12 +32,9 @@
         </div>
         <div class="wrap" id="tuesday">
             <div class="content">
-                <h2>Tuesday</h2>
+                <h2 contenteditable="true">Tuesday <span contenteditable="false" data-day="tuesday">Clear</span></h2>
                 <ul class="list" data-day="tuesday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="tuesday">
@@ -50,12 +44,9 @@
         </div>
         <div class="wrap" id="wednesday">
             <div class="content">
-                <h2>Wednesday</h2>
+                <h2 contenteditable="true">Wednesday <span contenteditable="false" data-day="wednesday">Clear</span></h2>
                 <ul class="list" data-day="wednesday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="wednesday">
@@ -65,12 +56,9 @@
         </div>
         <div class="wrap" id="thursday">
             <div class="content">
-                <h2>Thursday</h2>
+                <h2 contenteditable="true">Thursday <span contenteditable="false" data-day="thursday">Clear</span></h2>
                 <ul class="list" data-day="thursday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="thursday">
@@ -80,12 +68,9 @@
         </div>
         <div class="wrap" id="friday">
             <div class="content">
-                <h2>Friday</h2>
+                <h2 contenteditable="true">Friday <span contenteditable="false" data-day="friday">Clear</span></h2>
                 <ul class="list" data-day="friday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="friday">
@@ -95,12 +80,9 @@
         </div>
         <div class="wrap" id="saturday">
             <div class="content">
-                <h2>Saturday</h2>
+                <h2 contenteditable="true">Saturday <span contenteditable="false" data-day="saturday">Clear</span></h2>
                 <ul class="list" data-day="saturday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="saturday">
@@ -110,12 +92,9 @@
         </div>
         <div class="wrap" id="sunday">
             <div class="content">
-                <h2>Sunday</h2>
+                <h2 contenteditable="true">Sunday <span contenteditable="false" data-day="sunday">Clear</span></h2>
                 <ul class="list" data-day="sunday">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
                 </ul>
             </div>
             <form action="todo" data-day="sunday">
@@ -125,11 +104,23 @@
         </div>
         <div class="wrap" id="notes">
             <div class="content">
-                <h2>Notes</h2>
+                <h2 contenteditable="true">Notes <span contenteditable="false" data-day="notes">Clear</span></h2>
                 <ul class="list" data-day="notes">
                     <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
+                        <span contenteditable="true">Sample Item</span>
+                        <a class="delete" contenteditable="false" href="#">Delete</a>
+                    </li>
+                    <li class="item">
+                        <span contenteditable="true">Edit title planner</span>
+                        <a class="delete" contenteditable="false" href="#">Delete</a>
+                    </li>
+                    <li class="item">
+                        <span contenteditable="true">Edit the year</span>
+                        <a class="delete" contenteditable="false" href="#">Delete</a>
+                    </li>
+                    <li class="item">
+                        <span contenteditable="true">Edit title lists</span>
+                        <a class="delete" contenteditable="false" href="#">Delete</a>
                     </li>
                 </ul>
             </div>
@@ -140,16 +131,10 @@
         </div>
         <div class="wrap" id="month">
             <div class="content">
-                <h2>Month</h2>
+                <h2 contenteditable="true">Month <span contenteditable="false" data-day="month">Clear</span></h2>
                 <ul class="list" data-day="month">
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
-                    <li class="item">
-                        <span>Test</span>
-                        <a class="delete" href="#">Delete</a>
-                    </li>
+                    
+                    
                 </ul>
             </div>
             <form action="todo" data-day="month">

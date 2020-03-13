@@ -6,19 +6,28 @@
 }
 
 body {
-    background: #eee;
+    background-color: #DCD9D4; 
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
+    background-blend-mode: soft-light,screen;  
 }
 
 .container-title {
     grid-area: t;
     text-align: center;
     padding: 10px;
-    border: 1px solid #ccc;
+    border: 1px solid #333;
+    border-radius: 10px;
 }
 
 h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
+}
+
+h2 {
+    font-size: 18px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
 }
 
 .container {
@@ -36,14 +45,23 @@ h1 {
 
 .container-credits {
     grid-area: r;
-    text-align: right;
+    text-align: center;
     font-size: 12px;
+    padding: 1px;
 }
 
 .container-credits a {
     text-decoration: none;
-    color: red;
-    font-weight: bold;
+    color: #fff;
+    background: #999;
+    border-radius: 8px;
+    padding: 0 8px;
+    transition: ease-in-out .2s;
+}
+
+.container-credits a:hover {
+    background: #777;
+    transition: ease-in-out .2s;
 }
 
 #month {
@@ -55,32 +73,42 @@ h1 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    border-radius: 10px;
+    box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.02);
 }
 
 form {
     display: flex;
     height: 30px;
     margin: 10px;
+    align-items: center;
 }
 
 input {
-    width: 90%;
+    width: 100%;
     background: #eee;
     border: none;
     border-radius: none;
-    margin: 0px !important;
-    padding: 10px;
+    padding: 8px 16px;
+    border-radius: 10px 0 0 10px;
+    font-size: 12px;
+    -webkit-appearance: none;
 }
 
 button {
-    width: 10%;
-    background: #E0E07D;
-    border: none;
+    width: 30px;
+    background: rgb(192, 222, 134);
+    border-top: 9px solid #eee;
+    border-bottom: 8px solid #eee;
+    border-right: 8px solid #eee;
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+    
 }
 
 button:hover {
     background: greenyellow;
-    color: #fff;
+    color: #000;
     cursor: pointer;
     transition: ease-in-out .2s;
 }
@@ -90,6 +118,10 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+[contenteditable]:focus {
+    outline: 0px solid transparent;
 }
 
 ul {
@@ -105,10 +137,11 @@ li {
     align-items: center;
     transition: ease-in-out .2s;
     margin: 4px 0;
+    border-radius: 10px;
 }
 
 li.checked {
-    background: greenyellow;
+    background: rgb(192, 222, 134);
 }
 
 li:hover {
@@ -118,25 +151,43 @@ li:hover {
 }
 
 .delete {
-    background: red;
-    padding: 0 8px;
-    border-radius: 4px;
-    font-size: 12px;
-    height: 18px;
+    background: rgb(211, 55, 55);
+    padding: 2px 8px;
+    border-radius: 8px;
+    font-size: 9px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
     color: #fff;
     text-decoration: none;
     transition: ease-in-out .2s;
 }
 
 .delete:hover {
-    background: purple;
+    background: red;
     cursor: pointer;
     transition: ease-in-out .2s;
 }
 
+h2 span {
+    background: rgb(242, 242, 141);
+    border-radius: 8px;
+    padding: 2px 6px;
+    font-size: 9px;
+    display: block;
+    float: right;
+    margin-top: 5px;
+    transition: ease-in-out .2s;
+}
+
+h2 span:hover {
+    background: rgb(250, 250, 26);
+    transition: ease-in-out .2s;
+    cursor: pointer;
+}
+
 h2 {
     padding: 10px;
-    text-align: center;
+    text-align: left;
 }
 
 h2::after {
@@ -145,7 +196,9 @@ h2::after {
     height: 5px;
     display: block;
     background: #ddd;
+    border-radius: 2px;
 }
+
 
 @media only screen and (max-width: 600px) {
     .container {

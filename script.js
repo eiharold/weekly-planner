@@ -53,7 +53,9 @@ function handleBtn(e) {
             item.value = "";
         }
     });
-    addTodo(tempDay, tempInput);
+    if (tempInput != "") {
+        addTodo(tempDay, tempInput);
+    }
 }
 
 
@@ -97,7 +99,7 @@ activeClearList();
 
 function handleClear(e) {
     let dataTemp = this.dataset['day'];
-    lists.forEach( (list) => {
+    lists.forEach((list) => {
         if (dataTemp === list.dataset['day']) {
             list.innerHTML = "";
         }

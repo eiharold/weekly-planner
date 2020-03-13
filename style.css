@@ -40,6 +40,12 @@ h1 {
     font-size: 12px;
 }
 
+.container-credits a {
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+
 #month {
     grid-area: e;
 }
@@ -54,24 +60,26 @@ h1 {
 form {
     display: flex;
     height: 30px;
+    margin: 10px;
 }
 
 input {
     width: 90%;
-    background: #ddd;
+    background: #eee;
     border: none;
+    border-radius: none;
     margin: 0px !important;
     padding: 10px;
 }
 
 button {
     width: 10%;
-    background: #aaa;
+    background: #E0E07D;
     border: none;
 }
 
 button:hover {
-    background: #333;
+    background: greenyellow;
     color: #fff;
     cursor: pointer;
     transition: ease-in-out .2s;

@@ -102,8 +102,7 @@ button {
     border-bottom: 8px solid #eee;
     border-right: 8px solid #eee;
     border-left: none;
-    border-radius: 0 12px 12px 0;
-    
+    border-radius: 0 12px 12px 0; 
 }
 
 button:hover {
@@ -201,6 +200,11 @@ h2::after {
 
 
 @media only screen and (max-width: 600px) {
+
+    body {
+        background: #ddd;
+    }
+
     .container {
         grid-gap: 30px;
         margin: 10px;
@@ -217,5 +221,19 @@ h2::after {
         "i" 1fr
         "r" 20px
         / 1fr;
+    }
+
+    input {
+        font-size: 16px;
+    }
+
+    button {
+        width: 30px;
+        background: rgb(192, 222, 134);
+        border-top: 12px solid #eee;
+        border-bottom: 12px solid #eee;
+        border-right: 12px solid #eee;
+        border-left: none;
+        border-radius: 0 12px 12px 0; 
     }
 }

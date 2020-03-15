@@ -27,6 +27,7 @@ body.darkmode {
 
 .container-title.darkmode {
     border: 1px solid #eee;
+    list-s
 }
 
 h1 {
@@ -120,6 +121,7 @@ h2 {
     flex-direction: column;
     justify-content: space-between;
     border-radius: 10px;
+    border: 1px solid fff;
     box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.02);
 }
 

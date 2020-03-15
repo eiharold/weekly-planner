@@ -13,140 +13,150 @@
 
     <div class="container">
 
-        <div class="container-title">
-            <h1 contenteditable="true">Weekly Planner</h1>
-            <h3 contenteditable="true" id="year"></h3>
-        </div>
+        <header class="container-title">
+            <h1>Weekly Planner</h1>
+            <h3 id="year"></h3>
+        </header>
 
-        <div class="wrap" id="monday">
-            <div class="content">
-                <h2 contenteditable="true">Monday <span contenteditable="false" data-day="monday">Clear</span></h2>
-                <ul class="list" data-day="monday">
+        <main class="main">
+            <div class="wrap" id="monday">
+                <div class="content">
+                    <h2>Monday <span class="clear" contenteditable="false" data-day="monday">Clear</span></h2>
+                    <ul class="list" data-day="monday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="monday">
+                    <input type="text" name="input" data-day="monday" placeholder="Add your To do...">
+                    <button type="submit" data-day="monday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="monday">
-                <input type="text" name="input" data-day="monday" placeholder="Add your To do...">
-                <button type="submit" data-day="monday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="tuesday">
-            <div class="content">
-                <h2 contenteditable="true">Tuesday <span contenteditable="false" data-day="tuesday">Clear</span></h2>
-                <ul class="list" data-day="tuesday">
+            <div class="wrap" id="tuesday">
+                <div class="content">
+                    <h2 contenteditable="true">Tuesday <span class="clear" contenteditable="false"
+                            data-day="tuesday">Clear</span></h2>
+                    <ul class="list" data-day="tuesday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="tuesday">
+                    <input type="text" name="input" data-day="tuesday" placeholder="Add your To do...">
+                    <button type="submit" data-day="tuesday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="tuesday">
-                <input type="text" name="input" data-day="tuesday" placeholder="Add your To do...">
-                <button type="submit" data-day="tuesday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="wednesday">
-            <div class="content">
-                <h2 contenteditable="true">Wednesday <span contenteditable="false" data-day="wednesday">Clear</span>
-                </h2>
-                <ul class="list" data-day="wednesday">
+            <div class="wrap" id="wednesday">
+                <div class="content">
+                    <h2 contenteditable="true">Wednesday <span class="clear" contenteditable="false"
+                            data-day="wednesday">Clear</span>
+                    </h2>
+                    <ul class="list" data-day="wednesday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="wednesday">
+                    <input type="text" name="input" data-day="wednesday" placeholder="Add your To do...">
+                    <button type="submit" data-day="wednesday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="wednesday">
-                <input type="text" name="input" data-day="wednesday" placeholder="Add your To do...">
-                <button type="submit" data-day="wednesday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="thursday">
-            <div class="content">
-                <h2 contenteditable="true">Thursday <span contenteditable="false" data-day="thursday">Clear</span></h2>
-                <ul class="list" data-day="thursday">
+            <div class="wrap" id="thursday">
+                <div class="content">
+                    <h2 contenteditable="true">Thursday <span class="clear" contenteditable="false"
+                            data-day="thursday">Clear</span></h2>
+                    <ul class="list" data-day="thursday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="thursday">
+                    <input type="text" name="input" data-day="thursday" placeholder="Add your To do...">
+                    <button type="submit" data-day="thursday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="thursday">
-                <input type="text" name="input" data-day="thursday" placeholder="Add your To do...">
-                <button type="submit" data-day="thursday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="friday">
-            <div class="content">
-                <h2 contenteditable="true">Friday <span contenteditable="false" data-day="friday">Clear</span></h2>
-                <ul class="list" data-day="friday">
+            <div class="wrap" id="friday">
+                <div class="content">
+                    <h2 contenteditable="true">Friday <span class="clear" contenteditable="false"
+                            data-day="friday">Clear</span></h2>
+                    <ul class="list" data-day="friday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="friday">
+                    <input type="text" name="input" data-day="friday" placeholder="Add your To do...">
+                    <button type="submit" data-day="friday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="friday">
-                <input type="text" name="input" data-day="friday" placeholder="Add your To do...">
-                <button type="submit" data-day="friday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="saturday">
-            <div class="content">
-                <h2 contenteditable="true">Saturday <span contenteditable="false" data-day="saturday">Clear</span></h2>
-                <ul class="list" data-day="saturday">
+            <div class="wrap" id="saturday">
+                <div class="content">
+                    <h2 contenteditable="true">Saturday <span class="clear" contenteditable="false"
+                            data-day="saturday">Clear</span></h2>
+                    <ul class="list" data-day="saturday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="saturday">
+                    <input type="text" name="input" data-day="saturday" placeholder="Add your To do...">
+                    <button type="submit" data-day="saturday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="saturday">
-                <input type="text" name="input" data-day="saturday" placeholder="Add your To do...">
-                <button type="submit" data-day="saturday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="sunday">
-            <div class="content">
-                <h2 contenteditable="true">Sunday <span contenteditable="false" data-day="sunday">Clear</span></h2>
-                <ul class="list" data-day="sunday">
+            <div class="wrap" id="sunday">
+                <div class="content">
+                    <h2 contenteditable="true">Sunday <span class="clear" contenteditable="false"
+                            data-day="sunday">Clear</span></h2>
+                    <ul class="list" data-day="sunday">
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="sunday">
+                    <input type="text" name="input" data-day="sunday" placeholder="Add your To do...">
+                    <button type="submit" data-day="sunday">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="sunday">
-                <input type="text" name="input" data-day="sunday" placeholder="Add your To do...">
-                <button type="submit" data-day="sunday">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="notes">
-            <div class="content">
-                <h2 contenteditable="true">Notes <span contenteditable="false" data-day="notes">Clear</span></h2>
-                <ul class="list" data-day="notes">
-                    <li class="item">
-                        <span contenteditable="true">Sample Item</span>
-                        <a class="delete" contenteditable="false" href="#">Delete</a>
-                    </li>
-                    <li class="item">
-                        <span contenteditable="true">Edit title planner</span>
-                        <a class="delete" contenteditable="false" href="#">Delete</a>
-                    </li>
-                    <li class="item">
-                        <span contenteditable="true">Edit the year</span>
-                        <a class="delete" contenteditable="false" href="#">Delete</a>
-                    </li>
-                    <li class="item">
-                        <span contenteditable="true">Edit title lists</span>
-                        <a class="delete" contenteditable="false" href="#">Delete</a>
-                    </li>
-                </ul>
+            <div class="wrap" id="notes">
+                <div class="content">
+                    <h2 contenteditable="true">Notes <span class="clear" contenteditable="false"
+                            data-day="notes">Clear</span></h2>
+                    <ul class="list" data-day="notes">
+                        <li class="item">
+                            <span contenteditable="true">Sample Item</span>
+                            <a class="delete" contenteditable="false" href="#">Delete</a>
+                        </li>
+                        <li class="item">
+                            <span contenteditable="true">Edit title planner</span>
+                            <a class="delete" contenteditable="false" href="#">Delete</a>
+                        </li>
+                        <li class="item">
+                            <span contenteditable="true">Edit the year</span>
+                            <a class="delete" contenteditable="false" href="#">Delete</a>
+                        </li>
+                        <li class="item">
+                            <span contenteditable="true">Edit title lists</span>
+                            <a class="delete" contenteditable="false" href="#">Delete</a>
+                        </li>
+                    </ul>
+                </div>
+                <form action="todo" data-day="notes">
+                    <input type="text" name="input" data-day="notes" placeholder="Add your To do...">
+                    <button type="submit" data-day="notes">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="notes">
-                <input type="text" name="input" data-day="notes" placeholder="Add your To do...">
-                <button type="submit" data-day="notes">+</button>
-            </form>
-        </div>
-        <div class="wrap" id="month">
-            <div class="content">
-                <h2 contenteditable="true">Month <span contenteditable="false" data-day="month">Clear</span></h2>
-                <ul class="list" data-day="month">
+            <div class="wrap" id="month">
+                <div class="content">
+                    <h2 contenteditable="true">Month <span class="clear" contenteditable="false"
+                            data-day="month">Clear</span></h2>
+                    <ul class="list" data-day="month">
 
 
-                </ul>
+                    </ul>
+                </div>
+                <form action="todo" data-day="month">
+                    <input type="text" name="input" data-day="month" placeholder="Add your To do...">
+                    <button type="submit" data-day="month">+</button>
+                </form>
             </div>
-            <form action="todo" data-day="month">
-                <input type="text" name="input" data-day="month" placeholder="Add your To do...">
-                <button type="submit" data-day="month">+</button>
-            </form>
-        </div>
-
-        <div class="container-credits">
-            <h4>Developed by <a href="https://eiharold.com" target="_blank">eiHarold</a> &copy; 2020</h4>
-        </div>
+        </main>
+        <footer class="container-credits">
+            <h4><span id="dark">Dark Mode</span> | Developed by <a href="https://eiharold.com"
+                    target="_blank">eiHarold</a> &copy; 2020</h4>
+        </footer>
 
     </div>
 

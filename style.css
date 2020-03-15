@@ -6,22 +6,33 @@
 }
 
 body {
-    background-color: #DCD9D4; 
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.50) 0%, rgba(0,0,0,0.50) 100%), radial-gradient(at 50% 0%, rgba(255,255,255,0.10) 0%, rgba(0,0,0,0.50) 50%); 
-    background-blend-mode: soft-light,screen;  
+    background: #ddd;
+    transition: ease-in-out .2s;
+}
+
+body.darkmode {
+    background: #333;
+    color: #eee;
 }
 
 .container-title {
-    grid-area: t;
+    grid-area: header;
     text-align: center;
     padding: 10px;
     border: 1px solid #333;
     border-radius: 10px;
+    height: 100px;
+    margin: 10px
+}
+
+.container-title.darkmode {
+    border: 1px solid #eee;
 }
 
 h1 {
     text-transform: uppercase;
     letter-spacing: 2px;
+    font-size: 2em;
 }
 
 h2 {
@@ -31,26 +42,47 @@ h2 {
 }
 
 .container {
+    
+}
+
+.main {
     display: grid;
     grid-gap: 10px;
     margin: 10px;
-    height: calc(100vh - 20px);
+    height: calc(100vh - 158px);
     grid-template:
-    "t t t t t" 100px
     "a b c d e" 1fr
     "f g h i e" 1fr
-    "r r r r r" 20px
     / 1fr 1fr 1fr 1fr 1fr;
 }
 
 .container-credits {
-    grid-area: r;
     text-align: center;
     font-size: 12px;
     padding: 1px;
+    height: 20px;
 }
 
 .container-credits a {
+    text-decoration: none;
+    color: #000;
+    transition: ease-in-out .2s;
+}
+
+.container-credits a:hover {
+    color: rgb(211, 55, 55);
+    transition: ease-in-out .2s;
+}
+
+.container-credits a.darkmode {
+    color: #fff;
+}
+
+.container-credits a.darkmode:hover {
+    color: yellow;
+}
+
+#dark {
     text-decoration: none;
     color: #fff;
     background: #999;
@@ -59,9 +91,22 @@ h2 {
     transition: ease-in-out .2s;
 }
 
-.container-credits a:hover {
-    background: #777;
+#dark:hover {
+    background: #666;
     transition: ease-in-out .2s;
+    cursor: pointer;
+}
+
+#dark.darkmode {
+    background: #fff;
+    color: #000;
+    transition: ease-in-out .2s;
+}
+
+#dark.darkmode:hover {
+    background: yellow;
+    transition: ease-in-out .2s;
+    cursor: pointer;
 }
 
 #month {
@@ -75,6 +120,11 @@ h2 {
     justify-content: space-between;
     border-radius: 10px;
     box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.02);
+}
+
+.wrap.darkmode {
+    background: #222;
+    border: 1px solid #eee;
 }
 
 form {
@@ -96,6 +146,11 @@ input {
     height: 100%;
 }
 
+input.darkmode {
+    background: #111;
+    color: #eee;
+}
+
 button {
     width: 30px;
     background: rgb(192, 222, 134);
@@ -105,6 +160,10 @@ button {
     border-left: none;
     border-radius: 0 12px 12px 0;
     height: 100%;
+}
+
+button.darkmode {
+    border-color: #111;
 }
 
 button:hover {
@@ -141,12 +200,18 @@ li {
     border-radius: 10px;
 }
 
+li.darkmode {
+    background: #333;
+}
+
 li.checked {
     background: rgb(192, 222, 134);
+    color: #000;
 }
 
 li:hover {
     background:greenyellow;
+    color: #000;
     cursor: pointer;
     transition: ease-in-out .2s;
 }
@@ -169,7 +234,9 @@ li:hover {
     transition: ease-in-out .2s;
 }
 
-h2 span {
+
+
+.clear {
     background: rgb(242, 242, 141);
     border-radius: 8px;
     padding: 2px 6px;
@@ -178,6 +245,10 @@ h2 span {
     float: right;
     margin-top: 4px;
     transition: ease-in-out .2s;
+}
+
+.clear.darkmode {
+    color: #000;
 }
 
 h2 span:hover {
@@ -203,26 +274,21 @@ h2::after {
 
 @media only screen and (max-width: 600px) {
 
-    body {
-        background: #ddd;
-    }
-
-    .container {
-        grid-gap: 30px;
+    .main {
+        grid-gap: 20px;
         margin: 10px;
         grid-template:
-        "t" 100px
-        "a" 1fr
-        "b" 1fr
-        "c" 1fr
-        "d" 1fr
-        "f" 1fr
-        "g" 1fr
-        "h" 1fr
-        "e" 1fr
-        "i" 1fr
-        "r" 20px
+        "a"
+        "b"
+        "c"
+        "d"
+        "f"
+        "g"
+        "h"
+        "e"
+        "i"
         / 1fr;
+        height: auto;
     }
 
     input {

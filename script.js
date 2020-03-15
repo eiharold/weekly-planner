@@ -4,23 +4,15 @@ const btns = document.querySelectorAll('button');
 const inputs = document.querySelectorAll('input');
 let deletes = document.querySelectorAll('.delete');
 const year = document.querySelector('#year');
-const clearbtn = document.querySelectorAll('h2 span');
+const clearbtn = document.querySelectorAll('.clear');
+const darkbtn = document.querySelector('#dark');
 
 let calendar = new Date();
 year.innerHTML = calendar.getFullYear();
 
-// let lista = localStorage.getItem('list') || "";
-// let backupList = [];
-// let listasSalvas = backup(lista);
-
-// lists.forEach( (item, index) => {
-//     item.innerHTML = listasSalvas[index];
-// });
-
-
-
 let tempDay;
 let tempInput;
+let darkModeCheck = false;
 
 function activeCheck() {
     itens = document.querySelectorAll('li');
@@ -66,6 +58,7 @@ function addTodo(day, todo) {
             if (list.dataset['day'] === day) {
                 let newItem = document.createElement('li');
                 newItem.classList.add('item');
+                if (darkModeCheck) { newItem.classList.add('darkmode')}
                 newItem.innerHTML = `<span contenteditable="true">${todo}</span><a class="delete" contenteditable="false" href="#">Delete</a>`;
                 list.appendChild(newItem);
                 activeDelete();
@@ -86,6 +79,7 @@ function activeDelete() {
 activeDelete();
 
 function handleDel(e) {
+    e.preventDefault();
     this.parentElement.remove();
 }
 
@@ -106,24 +100,38 @@ function handleClear(e) {
     })
 }
 
-// function attLists() {
-//     lista = "";
-//     lists = document.querySelectorAll('ul');
-//     lists.forEach((item) => {
-//        lista += item.innerHTML;
-//     });
-//     localStorage.setItem('list', lista);
-// }
+darkbtn.addEventListener('click', darkMode);
 
-// attLists();
+function darkMode() {
 
-// function backup(data) {
-//     backupList = data.split("li>\n");
-//     backupList.forEach( (item, index, array) => {
-//         if (index !== array.length - 1) {
-//             item += "li>";
-//         }
-//         array.pop(); 
-//     });
-//     return backupList;
-// }
+    darkbtn.classList.toggle('darkmode-active');
+    let body = document.querySelector('body');
+    let containerTitle = document.querySelector('.container-title');
+    let wrap = document.querySelectorAll('.wrap');
+    let linkCredits = document.querySelector('.container-credits a');
+    let valueDarkBtn = darkbtn.classList.value;
+
+    if (valueDarkBtn == 'darkmode-active') {
+        darkbtn.innerHTML = "Light Mode";
+        darkModeCheck = true;
+    } else {
+        darkbtn.innerHTML = "Dark Mode";
+        darkModeCheck = false;
+    }
+
+    function addDark(elements) {
+        elements.forEach( (element) => {
+            if (element.length) {
+                element.forEach((item) => {
+                    item.classList.toggle('darkmode');
+                });
+            } else {
+                element.classList.toggle('darkmode');
+            }
+        });
+            
+    }
+
+    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn]);
+
+}

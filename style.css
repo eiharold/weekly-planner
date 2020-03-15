@@ -61,6 +61,7 @@ h2 {
     font-size: 12px;
     padding: 1px;
     height: 20px;
+    margin: 5px;
 }
 
 .container-credits a {
@@ -293,5 +294,9 @@ h2::after {
 
     input {
         font-size: 16px;
+    }
+
+    .container-credits {
+        margin: 20px 5px;
     }
 }

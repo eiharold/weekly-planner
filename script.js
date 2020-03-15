@@ -1,3 +1,22 @@
+const main = document.querySelector('.main');
+
+function generateLists(arrayListNames) {
+    for (i = 0; i < arrayListNames.length; i++) {
+        main.innerHTML += `<div class="wrap" id="${arrayListNames[i]}">
+            <div class="content">
+                <h2>${arrayListNames[i]}<span class="clear" contenteditable="false" data-day="${arrayListNames[i]}">Clear</span></h2>
+                <ul class="list" data-day="${arrayListNames[i]}">
+                </ul>
+            </div>
+            <form action="todo" data-day="${arrayListNames[i]}">
+                <input type="text" name="input" data-day="${arrayListNames[i]}" placeholder="Add your To do...">
+                <button type="submit" data-day="${arrayListNames[i]}">+</button>
+            </form>
+            </div>`;
+    }
+}
+generateLists(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month']);
+
 const lists = document.querySelectorAll('ul');
 let itens = document.querySelectorAll('li');
 const btns = document.querySelectorAll('button');
@@ -13,6 +32,7 @@ year.innerHTML = calendar.getFullYear();
 let tempDay;
 let tempInput;
 let darkModeCheck = false;
+
 
 function activeCheck() {
     itens = document.querySelectorAll('li');
@@ -58,7 +78,7 @@ function addTodo(day, todo) {
             if (list.dataset['day'] === day) {
                 let newItem = document.createElement('li');
                 newItem.classList.add('item');
-                if (darkModeCheck) { newItem.classList.add('darkmode')}
+                if (darkModeCheck) { newItem.classList.add('darkmode') }
                 newItem.innerHTML = `<span contenteditable="true">${todo}</span><a class="delete" contenteditable="false" href="#">Delete</a>`;
                 list.appendChild(newItem);
                 activeDelete();
@@ -120,16 +140,18 @@ function darkMode() {
     }
 
     function addDark(elements) {
-        elements.forEach( (element) => {
-            if (element.length) {
+        elements.forEach((element) => {
+            console.log(element.length);
+            if (element.length && element.length != 0) {
                 element.forEach((item) => {
                     item.classList.toggle('darkmode');
                 });
+            } else if (element.length == 0) {
+                return;
             } else {
                 element.classList.toggle('darkmode');
             }
         });
-            
     }
 
     addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn]);

@@ -14,7 +14,7 @@ function generateLists(arrayListNames) {
             </div>
             <form action="todo" data-day="${arrayListNames[i]}">
                 <input type="text" name="input" data-day="${arrayListNames[i]}" placeholder="Add your To do...">
-                <button type="submit" data-day="${arrayListNames[i]}">+</button>
+                <button type="submit" data-day="${arrayListNames[i]}"><i class="fas fa-plus"></i></button>
             </form>
             </div>`;
     }
@@ -26,6 +26,7 @@ let itens = document.querySelectorAll('li');
 const btns = document.querySelectorAll('button');
 const inputs = document.querySelectorAll('input');
 let deletes = document.querySelectorAll('.delete');
+let moves = document.querySelectorAll('.move');
 const year = document.querySelector('#year');
 const clearbtn = document.querySelectorAll('.clear');
 const darkbtn = document.querySelector('#dark');
@@ -85,9 +86,15 @@ function addTodo(day, todo) {
                 newItem.classList.add('item');
                 newItem.setAttribute("data-day", day);
                 if (darkModeCheck) { newItem.classList.add('darkmode') }
-                newItem.innerHTML = `<span contenteditable="true">${todo}</span><a class="delete" contenteditable="false" href="#">Delete</a>`;
+                newItem.innerHTML = `
+                <span contenteditable="true">${todo}</span>
+                <span class="itemicons">
+                    <a class="move" contenteditable="false" href="#"><i class="fas fa-chevron-right"></i></a>
+                    <a class="delete" contenteditable="false" href="#"><i class="fas fa-trash-alt"></i></a>
+                </span>`;
                 list.appendChild(newItem);
                 activeDelete();
+                moveItem();
                 activeCheck();
                 progressBar(day);
             }
@@ -105,8 +112,45 @@ activeDelete();
 
 function handleDel(e) {
     e.preventDefault();
-    this.parentElement.remove();
+    this.parentElement.parentElement.remove();
     activeCheck();
+}
+
+
+function moveItem() {
+    moves = document.querySelectorAll('.move');
+    moves.forEach((move) => {
+        move.addEventListener('click', handleMove);
+    });
+}
+moveItem();
+
+function handleMove(e) {
+    e.preventDefault();
+    let tempItem = this.parentElement.parentElement;
+    let tempContent = tempItem.querySelector('span');
+    let tempTodo = tempContent.innerText;
+    let tempDay = this.parentElement.parentElement.dataset['day'];
+    let nextDay;
+    insertLists.forEach((name, index) => {
+        if (tempDay == name)
+            nextDay = insertLists[index + 1];
+    });
+    if (nextDay != undefined) {
+        itens.forEach( (item) => {
+            let itemContent = item.querySelector('span').innerText;
+            if (item.dataset['day'] == tempDay && itemContent == tempTodo) {
+                item.remove();
+            }
+        });
+        lists.forEach( (list) => {
+            if (list.dataset['day'] ==  nextDay) {
+                addTodo(nextDay, tempTodo);
+            }
+        });
+        progressBar(tempDay);
+    }
+
 }
 
 
@@ -119,11 +163,14 @@ activeClearList();
 
 function handleClear(e) {
     let dataTemp = this.dataset['day'];
-    lists.forEach((list) => {
-        if (dataTemp === list.dataset['day']) {
-            list.innerHTML = "";
+    itens.forEach((item) => {
+        if (dataTemp === item.dataset['day']) {
+            item.remove();
+            activeCheck();
         }
-    })
+        progressBar(dataTemp);
+    });
+
 }
 
 
@@ -145,7 +192,11 @@ function progressBar(day) {
 
     progressbar.forEach((bar) => {
         if (bar.dataset['day'] == day) {
-            bar.style.width = `${progress}%`;
+            if (totalItens !== 0) {
+                bar.style.width = `${progress}%`;
+            } else {
+                bar.style.width = "0%";
+            }
         }
     });
 }

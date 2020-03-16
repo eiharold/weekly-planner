@@ -1,10 +1,14 @@
 const main = document.querySelector('.main');
+const insertLists = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month'];
 
 function generateLists(arrayListNames) {
     for (i = 0; i < arrayListNames.length; i++) {
         main.innerHTML += `<div class="wrap" id="${arrayListNames[i]}">
             <div class="content">
                 <h2>${arrayListNames[i]}<span class="clear" contenteditable="false" data-day="${arrayListNames[i]}">Clear</span></h2>
+                <div class="wrapbar">
+                    <div class="progressbar" data-day="${arrayListNames[i]}"></div>
+                </div>
                 <ul class="list" data-day="${arrayListNames[i]}">
                 </ul>
             </div>
@@ -15,7 +19,7 @@ function generateLists(arrayListNames) {
             </div>`;
     }
 }
-generateLists(['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month']);
+generateLists(insertLists);
 
 const lists = document.querySelectorAll('ul');
 let itens = document.querySelectorAll('li');
@@ -43,6 +47,7 @@ function activeCheck() {
 
 function check(e) {
     this.classList.toggle('checked');
+    progressBar(this.dataset['day']);
 }
 
 activeCheck();
@@ -78,13 +83,13 @@ function addTodo(day, todo) {
             if (list.dataset['day'] === day) {
                 let newItem = document.createElement('li');
                 newItem.classList.add('item');
+                newItem.setAttribute("data-day", day);
                 if (darkModeCheck) { newItem.classList.add('darkmode') }
                 newItem.innerHTML = `<span contenteditable="true">${todo}</span><a class="delete" contenteditable="false" href="#">Delete</a>`;
                 list.appendChild(newItem);
                 activeDelete();
                 activeCheck();
-                // attLists();
-                // backup(lista);
+                progressBar(day);
             }
         });
     }
@@ -101,6 +106,7 @@ activeDelete();
 function handleDel(e) {
     e.preventDefault();
     this.parentElement.remove();
+    activeCheck();
 }
 
 
@@ -120,6 +126,30 @@ function handleClear(e) {
     })
 }
 
+
+function progressBar(day) {
+    let progressbar = document.querySelectorAll('.progressbar');
+    let totalItens = 0;
+    let checkedItens = 0;
+
+    itens.forEach((item) => {
+        if (item.dataset['day'] == day) {
+            totalItens++;
+        }
+        if (item.dataset['day'] == day && item.classList.contains('checked')) {
+            checkedItens++;
+        }
+    });
+
+    let progress = (checkedItens / totalItens) * 100;
+
+    progressbar.forEach((bar) => {
+        if (bar.dataset['day'] == day) {
+            bar.style.width = `${progress}%`;
+        }
+    });
+}
+
 darkbtn.addEventListener('click', darkMode);
 
 function darkMode() {
@@ -130,6 +160,7 @@ function darkMode() {
     let wrap = document.querySelectorAll('.wrap');
     let linkCredits = document.querySelector('.container-credits a');
     let valueDarkBtn = darkbtn.classList.value;
+    let wrapbar = document.querySelectorAll('.wrapbar');
 
     if (valueDarkBtn == 'darkmode-active') {
         darkbtn.innerHTML = "Light Mode";
@@ -141,7 +172,6 @@ function darkMode() {
 
     function addDark(elements) {
         elements.forEach((element) => {
-            console.log(element.length);
             if (element.length && element.length != 0) {
                 element.forEach((item) => {
                     item.classList.toggle('darkmode');
@@ -154,6 +184,6 @@ function darkMode() {
         });
     }
 
-    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn]);
+    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar]);
 
 }

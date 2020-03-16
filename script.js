@@ -1,7 +1,9 @@
-const main = document.querySelector('.main');
+//Main function - HTML Constructor
+
 const insertLists = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month'];
 
 function generateLists(arrayListNames) {
+    const main = document.querySelector('.main');
     for (i = 0; i < arrayListNames.length; i++) {
         main.innerHTML += `<div class="wrap" id="${arrayListNames[i]}">
             <div class="content">
@@ -13,38 +15,43 @@ function generateLists(arrayListNames) {
                 </ul>
             </div>
             <form action="todo" data-day="${arrayListNames[i]}">
-                <input type="text" name="input" data-day="${arrayListNames[i]}" placeholder="Add your To do...">
+                <input type="text" name="input" autocomplete="off" data-day="${arrayListNames[i]}" placeholder="Add your To do...">
                 <button type="submit" data-day="${arrayListNames[i]}"><i class="fas fa-plus"></i></button>
             </form>
             </div>`;
     }
 }
+
 generateLists(insertLists);
+
+//Global Vars
 
 const lists = document.querySelectorAll('ul');
 let itens = document.querySelectorAll('li');
-const btns = document.querySelectorAll('button');
+let idItem = 0;
 const inputs = document.querySelectorAll('input');
-let deletes = document.querySelectorAll('.delete');
-let moves = document.querySelectorAll('.move');
-const year = document.querySelector('#year');
+const btns = document.querySelectorAll('button');
 const clearbtn = document.querySelectorAll('.clear');
 const darkbtn = document.querySelector('#dark');
-
-let calendar = new Date();
-const monthNames = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
-];
-year.innerHTML = monthNames[calendar.getMonth()] + " &nbsp;&bull;&nbsp; " + calendar.getFullYear();
-
-let tempDay;
-let tempInput;
 let darkModeCheck = false;
+
+//getDate Function: capture and display the month and year
+
+function getDate() {
+    let calendar = new Date();
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+    const year = document.querySelector('#year');
+    year.innerHTML = monthNames[calendar.getMonth()] + " &nbsp;&bull;&nbsp; " + calendar.getFullYear();
+}
+
+getDate();
+
+//adjustScroll Function: limit the overflow-y lists with scroll
 
 function adjustScroll() {
     const daysHeight = document.querySelector('#monday').clientHeight - 110;
     const monthHeight = document.querySelector('#month').clientHeight - 105;
-    console.log(monthHeight);
+    if (window.innerWidth >= 600) {
     lists.forEach((list) => {
         if (list.dataset['day'] == 'month') {
             list.style.maxHeight = monthHeight + "px";
@@ -52,23 +59,74 @@ function adjustScroll() {
             list.style.maxHeight = daysHeight + "px";
         }
     });
+    }
 }
+
 adjustScroll();
+
+//addTodo Function: insert a item to the respective list and active other functions to renew infos
+
+function addTodo(day, todo, active = false) {
+
+    let startContent = `
+    <span contenteditable="true">${todo}</span>
+    <span class="itemicons">`;
+    let backContent = `
+        <a class="back" contenteditable="false" href="#"><i class="fas fa-chevron-left"></i></a>`;
+    let moveContent = `
+        <a class="move" contenteditable="false" href="#"><i class="fas fa-chevron-right"></i></a>`;
+    let endContent = `
+        <a class="delete" contenteditable="false" href="#"><i class="fas fa-trash-alt"></i></a>
+        </span>`;
+
+    if (todo != undefined) {
+        lists.forEach((list, index) => {
+            if (list.dataset['day'] === day) {
+                let newItem = document.createElement('li');
+                newItem.classList.add('item');
+                newItem.setAttribute("data-day", day);
+                if (darkModeCheck) { newItem.classList.add('darkmode') };
+                if (day == insertLists[0]) {
+                    newItem.innerHTML = startContent + moveContent + endContent;
+                    let cornerAdjustments = newItem.querySelector('.move');
+                    cornerAdjustments.style.borderRadius = "8px 0 0 8px";
+                } else if (day == insertLists[8]) {
+                    newItem.innerHTML = startContent + backContent + endContent;
+                } else {
+                    newItem.innerHTML = startContent + backContent + moveContent + endContent;
+                }
+                if (active) { newItem.classList.add('checked'); };
+                newItem.setAttribute('data-id', idItem);
+                idItem++;
+                list.appendChild(newItem);
+                activeDelete();
+                moveItem();
+                activeCheck();
+                progressBar(day);
+            }
+        });
+    }
+}
+
+//activeCheck Function: add the class .checked to a clicked item
 
 function activeCheck() {
     itens = document.querySelectorAll('li');
     Array.from(itens).forEach((item) => {
-        item.addEventListener('click', check);
+        item.addEventListener('click', handleCheck);
     });
 }
 
-function check(e) {
+//activeCheck callback
+
+function handleCheck(e) {
     this.classList.toggle('checked');
     progressBar(this.dataset['day']);
 }
 
 activeCheck();
 
+//activeBtn Function: insert the input item at the respective list with click and active other functions to renew infos
 
 function activeBtn() {
     Array.from(btns).forEach((btn) => {
@@ -78,9 +136,12 @@ function activeBtn() {
 
 activeBtn();
 
+//activeBtn callback
+
 function handleBtn(e) {
     e.preventDefault();
-    tempDay = this.dataset['day'];
+    let tempDay = this.dataset['day'];
+    let tempInput;
     inputs.forEach((item) => {
         if (item.dataset['day'] === tempDay) {
             tempInput = item.value;
@@ -92,41 +153,17 @@ function handleBtn(e) {
     }
 }
 
-
-function addTodo(day, todo) {
-
-    if (todo != undefined) {
-        lists.forEach((list, index) => {
-            if (list.dataset['day'] === day) {
-                let newItem = document.createElement('li');
-                newItem.classList.add('item');
-                newItem.setAttribute("data-day", day);
-                if (darkModeCheck) { newItem.classList.add('darkmode') }
-                newItem.innerHTML = `
-                <span contenteditable="true">${todo}</span>
-                <span class="itemicons">
-                    <a class="back" contenteditable="false" href="#"><i class="fas fa-chevron-left"></i></a>
-                    <a class="move" contenteditable="false" href="#"><i class="fas fa-chevron-right"></i></a>
-                    <a class="delete" contenteditable="false" href="#"><i class="fas fa-trash-alt"></i></a>
-                </span>`;
-                list.appendChild(newItem);
-                activeDelete();
-                moveItem();
-                backItem();
-                activeCheck();
-                progressBar(day);
-            }
-        });
-    }
-}
+//activeDelete Function: add the functionallity to remove itens from lists
 
 function activeDelete() {
-    deletes = document.querySelectorAll('.delete');
+    let deletes = document.querySelectorAll('.delete');
     Array.from(deletes).forEach((del) => {
         del.addEventListener('click', handleDel);
     });
 }
 activeDelete();
+
+//activeDelete callback
 
 function handleDel(e) {
     e.preventDefault();
@@ -134,89 +171,85 @@ function handleDel(e) {
     activeCheck();
 }
 
+//moveItem Function: add the functionallity to move to back and foward itens through lists
 
 function moveItem() {
-    moves = document.querySelectorAll('.move');
+    let moves = document.querySelectorAll('.move');
+    let backs = document.querySelectorAll('.back');
     moves.forEach((move) => {
         move.addEventListener('click', handleMove);
     });
+    backs.forEach((back) => {
+        back.addEventListener('click', handleMove);
+    });
 }
+
 moveItem();
+
+//moveItem callback
 
 function handleMove(e) {
     e.preventDefault();
+    let typeDay; //0 for back and 1 for foward
+
+    if (this.classList.contains('move')) {
+        typeDay = 1;
+    } else if (this.classList.contains('back')) {
+        typeday = 0;
+    }
+
     let tempItem = this.parentElement.parentElement;
     let tempContent = tempItem.querySelector('span');
     let tempTodo = tempContent.innerText;
     let tempDay = this.parentElement.parentElement.dataset['day'];
-    let nextDay;
-    let okay = true;
+    let isChecked = false;
+    let nextDay, prevDay;
+
+    if (tempItem.classList.contains('checked')) { isChecked = true; };
+
     insertLists.forEach((name, index) => {
-        if (tempDay == name)
+        if (tempDay == name) {
             nextDay = insertLists[index + 1];
+            prevDay = insertLists[index - 1];
+        }
     });
-    if (nextDay != undefined) {
+
+    function removeTempItem() {
         itens.forEach((item) => {
-            let itemContent = item.querySelector('span').innerText;
-            if (item.dataset['day'] == tempDay && itemContent == tempTodo && okay) {
-                item.remove();
-                okay = false;
-            }
+            if (item.dataset['id'] == tempItem.dataset['id']) { item.remove(); }
         });
-        lists.forEach((list) => {
-            if (list.dataset['day'] == nextDay) {
-                addTodo(nextDay, tempTodo);
-            }
-        });
-        progressBar(tempDay);
+    }
+
+    function addNewItem(day) {
+        if (day != undefined && day) {
+            removeTempItem();
+            lists.forEach((list) => {
+                if (list.dataset['day'] == day) {
+                    isChecked ? addTodo(day, tempTodo, true) : addTodo(day, tempTodo);
+                }
+            });
+            progressBar(tempDay);
+        }
+    }
+
+    if (typeDay) {
+        addNewItem(nextDay);
+    } else {
+        addNewItem(prevDay);
     }
 }
 
-
-function backItem() {
-    moves = document.querySelectorAll('.back');
-    moves.forEach((move) => {
-        move.addEventListener('click', handleBack);
-    });
-}
-backItem();
-
-function handleBack(e) {
-    e.preventDefault();
-    let tempItem = this.parentElement.parentElement;
-    let tempContent = tempItem.querySelector('span');
-    let tempTodo = tempContent.innerText;
-    let tempDay = this.parentElement.parentElement.dataset['day'];
-    let beforeDay;
-    let okay = true;
-    insertLists.forEach((name, index) => {
-        if (tempDay == name)
-            beforeDay = insertLists[index - 1];
-    });
-    if (beforeDay != undefined) {
-        itens.forEach((item) => {
-            let itemContent = item.querySelector('span').innerText;
-            if (item.dataset['day'] == tempDay && itemContent == tempTodo && okay) {
-                item.remove();
-                okay = false;
-            }
-        });
-        lists.forEach((list) => {
-            if (list.dataset['day'] == beforeDay) {
-                addTodo(beforeDay, tempTodo);
-            }
-        });
-        progressBar(tempDay);
-    }
-}
-
+//activeClearList Function: add the functionality to clear a list to the respective button
 
 function activeClearList() {
     clearbtn.forEach((btn) => {
         btn.addEventListener('click', handleClear);
     });
 }
+
 activeClearList();
+
+//activeClearList callback
 
 function handleClear(e) {
     let dataTemp = this.dataset['day'];
@@ -230,6 +263,7 @@ function handleClear(e) {
 
 }
 
+//progressBar Function: control the progress bar of each list
 
 function progressBar(day) {
     let progressbar = document.querySelectorAll('.progressbar');
@@ -257,6 +291,8 @@ function progressBar(day) {
         }
     });
 }
+
+//darkMode Function: add the class .darkmode to some itens of the HTML, changing the appearance
 
 darkbtn.addEventListener('click', darkMode);
 

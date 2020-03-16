@@ -22,12 +22,11 @@ body.darkmode {
     border: 1px solid #333;
     border-radius: 10px;
     height: 100px;
-    margin: 10px
+    margin: 10px;
 }
 
 .container-title.darkmode {
     border: 1px solid #eee;
-    list-s
 }
 
 h1 {
@@ -37,15 +36,14 @@ h1 {
 }
 
 h2 {
-    font-size: 18px;
+    font-size: 16px;
     letter-spacing: 1px;
     text-transform: uppercase;
     padding: 10px 10px 5px 10px;
     text-align: left;
-}
-
-.container {
-    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .main {
@@ -230,6 +228,7 @@ li {
     transition: ease-in-out .2s;
     margin: 4px 0;
     border-radius: 10px;
+    font-size: 14px;
 }
 
 li.darkmode {
@@ -298,7 +297,6 @@ li:hover {
     font-size: 9px;
     display: block;
     float: right;
-    margin-top: 4px;
     transition: ease-in-out .2s;
 }
 
@@ -352,8 +350,8 @@ h2 span:hover {
         "f"
         "g"
         "h"
-        "e"
         "i"
+        "e"
         / 1fr;
         height: auto;
     }
@@ -362,7 +360,53 @@ h2 span:hover {
         font-size: 16px;
     }
 
+    .container-title {
+        margin-bottom: 20px;
+        font-size: 15px;
+    }
+
     .container-credits {
         margin: 20px 5px;
+        font-size: 13px;
+    }
+
+    li {
+        padding: 10px 10px 10px 15px;
+        font-size: 16px;
+    }
+
+    li:hover {
+        background: #eee;
+    }
+
+    li.checked:hover {
+        background: rgb(192, 222, 134);
+
+    }
+
+    li.darkmode:hover {
+        background: #333;
+    }
+
+    h2 {
+        font-size: 21px;
+    }
+
+    h2 span:hover {
+       background: rgb(242, 242, 141);
+    }
+
+    .button:hover {
+        background: rgb(192, 222, 134);
+    }
+
+    form {
+        height: 50px;
+    }
+
+    .delete, .clear, .back, .move, button {
+        font-size: 16px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
 }

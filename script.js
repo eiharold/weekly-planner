@@ -32,7 +32,10 @@ const clearbtn = document.querySelectorAll('.clear');
 const darkbtn = document.querySelector('#dark');
 
 let calendar = new Date();
-year.innerHTML = calendar.getFullYear();
+const monthNames = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+year.innerHTML = monthNames[calendar.getMonth()] + " &nbsp;&bull;&nbsp; " + calendar.getFullYear();
 
 let tempDay;
 let tempInput;
@@ -147,6 +150,7 @@ function handleMove(e) {
     let tempTodo = tempContent.innerText;
     let tempDay = this.parentElement.parentElement.dataset['day'];
     let nextDay;
+    let okay = true;
     insertLists.forEach((name, index) => {
         if (tempDay == name)
             nextDay = insertLists[index + 1];
@@ -154,8 +158,9 @@ function handleMove(e) {
     if (nextDay != undefined) {
         itens.forEach((item) => {
             let itemContent = item.querySelector('span').innerText;
-            if (item.dataset['day'] == tempDay && itemContent == tempTodo) {
+            if (item.dataset['day'] == tempDay && itemContent == tempTodo && okay) {
                 item.remove();
+                okay = false;
             }
         });
         lists.forEach((list) => {
@@ -183,6 +188,7 @@ function handleBack(e) {
     let tempTodo = tempContent.innerText;
     let tempDay = this.parentElement.parentElement.dataset['day'];
     let beforeDay;
+    let okay = true;
     insertLists.forEach((name, index) => {
         if (tempDay == name)
             beforeDay = insertLists[index - 1];
@@ -190,8 +196,9 @@ function handleBack(e) {
     if (beforeDay != undefined) {
         itens.forEach((item) => {
             let itemContent = item.querySelector('span').innerText;
-            if (item.dataset['day'] == tempDay && itemContent == tempTodo) {
+            if (item.dataset['day'] == tempDay && itemContent == tempTodo && okay) {
                 item.remove();
+                okay = false;
             }
         });
         lists.forEach((list) => {

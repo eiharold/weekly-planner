@@ -117,6 +117,10 @@ h2 {
     grid-area: e;
 }
 
+ul {
+    overflow-y: auto;
+}
+
 .wrap {
     background: #fff;
     display: flex;
@@ -131,6 +135,29 @@ h2 {
     background: #222;
     border: 1px solid #eee;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
 form {
     display: flex;
@@ -243,23 +270,25 @@ li:hover {
     transition: ease-in-out .2s;
 }
 
-.move {
-    background: rgb(198, 198, 250);
-    padding: 3px 6px;
+.move, .back {
+    background: #bbb;
+    padding: 4px 5px 2px 6px;
     font-size: 9px;
-    border-radius: 8px 0 0 8px;
     text-transform: uppercase;
     letter-spacing: 1px;
     color: #fff;
     text-decoration: none;
     transition: ease-in-out .2s;
-    margin-right: 3px;
 }
 
-.move:hover {
+.move:hover, .back:hover {
     background: rgb(213, 213, 255);
     cursor: pointer;
     transition: ease-in-out .2s;
+}
+
+.back {
+    border-radius: 8px 0 0 8px;
 }
 
 .clear {
@@ -292,7 +321,7 @@ h2 span:hover {
     border-radius: 4px;
     display: flex;
     align-items: center;
-    margin: 0 10px;
+    margin: 0 10px 5px 10px;
     padding: 0 4px;
 }
 

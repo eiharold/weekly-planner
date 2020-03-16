@@ -38,6 +38,19 @@ let tempDay;
 let tempInput;
 let darkModeCheck = false;
 
+function adjustScroll() {
+    const daysHeight = document.querySelector('#monday').clientHeight - 110;
+    const monthHeight = document.querySelector('#month').clientHeight - 105;
+    console.log(monthHeight);
+    lists.forEach((list) => {
+        if (list.dataset['day'] == 'month') {
+            list.style.maxHeight = monthHeight + "px";
+        } else {
+            list.style.maxHeight = daysHeight + "px";
+        }
+    });
+}
+adjustScroll();
 
 function activeCheck() {
     itens = document.querySelectorAll('li');
@@ -89,12 +102,14 @@ function addTodo(day, todo) {
                 newItem.innerHTML = `
                 <span contenteditable="true">${todo}</span>
                 <span class="itemicons">
+                    <a class="back" contenteditable="false" href="#"><i class="fas fa-chevron-left"></i></a>
                     <a class="move" contenteditable="false" href="#"><i class="fas fa-chevron-right"></i></a>
                     <a class="delete" contenteditable="false" href="#"><i class="fas fa-trash-alt"></i></a>
                 </span>`;
                 list.appendChild(newItem);
                 activeDelete();
                 moveItem();
+                backItem();
                 activeCheck();
                 progressBar(day);
             }
@@ -137,20 +152,55 @@ function handleMove(e) {
             nextDay = insertLists[index + 1];
     });
     if (nextDay != undefined) {
-        itens.forEach( (item) => {
+        itens.forEach((item) => {
             let itemContent = item.querySelector('span').innerText;
             if (item.dataset['day'] == tempDay && itemContent == tempTodo) {
                 item.remove();
             }
         });
-        lists.forEach( (list) => {
-            if (list.dataset['day'] ==  nextDay) {
+        lists.forEach((list) => {
+            if (list.dataset['day'] == nextDay) {
                 addTodo(nextDay, tempTodo);
             }
         });
         progressBar(tempDay);
     }
+}
 
+
+function backItem() {
+    moves = document.querySelectorAll('.back');
+    moves.forEach((move) => {
+        move.addEventListener('click', handleBack);
+    });
+}
+backItem();
+
+function handleBack(e) {
+    e.preventDefault();
+    let tempItem = this.parentElement.parentElement;
+    let tempContent = tempItem.querySelector('span');
+    let tempTodo = tempContent.innerText;
+    let tempDay = this.parentElement.parentElement.dataset['day'];
+    let beforeDay;
+    insertLists.forEach((name, index) => {
+        if (tempDay == name)
+            beforeDay = insertLists[index - 1];
+    });
+    if (beforeDay != undefined) {
+        itens.forEach((item) => {
+            let itemContent = item.querySelector('span').innerText;
+            if (item.dataset['day'] == tempDay && itemContent == tempTodo) {
+                item.remove();
+            }
+        });
+        lists.forEach((list) => {
+            if (list.dataset['day'] == beforeDay) {
+                addTodo(beforeDay, tempTodo);
+            }
+        });
+        progressBar(tempDay);
+    }
 }
 
 
@@ -214,10 +264,10 @@ function darkMode() {
     let wrapbar = document.querySelectorAll('.wrapbar');
 
     if (valueDarkBtn == 'darkmode-active') {
-        darkbtn.innerHTML = "Light Mode";
+        darkbtn.innerHTML = '<i class="fas fa-lightbulb"></i> Light Mode';
         darkModeCheck = true;
     } else {
-        darkbtn.innerHTML = "Dark Mode";
+        darkbtn.innerHTML = '<i class="far fa-lightbulb"></i> Dark Mode';
         darkModeCheck = false;
     }
 

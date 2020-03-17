@@ -1,6 +1,48 @@
-//Main function - HTML Constructor
+//INITIAL CONFIGS
+
+//CONFIG AND ACTIVATING MAIN FUNCTION
 
 const insertLists = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month'];
+generateLists(insertLists);
+
+//GLOBAL VARS
+
+const lists = document.querySelectorAll('ul');
+const inputs = document.querySelectorAll('input');
+const btns = document.querySelectorAll('button');
+const clearbtn = document.querySelectorAll('.clear');
+const darkbtn = document.querySelector('#dark');
+let itens = document.querySelectorAll('li');
+let idItem = 0;
+let storagedItens = ['', '', '', '', '', '', '', '', ''];
+let darkModeCheck = false;
+
+//ACTIVATING ALL STARTER FUNCTIONS
+
+
+function startPlanner() {
+    getDate();
+    adjustScroll();
+    activeCheck();
+    activeBtn();
+    activeDelete();
+    moveItem();
+    activeClearList();
+    if (darkModeCheck) { darkMode() };
+    for (i = 0; i < insertLists.length; i++) {
+        progressBar(insertLists[i]);
+    }
+}
+
+startPlanner();
+
+if (localStorage.getItem('idCount')) {
+    getStorageList();
+}
+
+//FUNCTIONS
+
+//Main function - HTML Constructor
 
 function generateLists(arrayListNames) {
     const main = document.querySelector('.main');
@@ -22,19 +64,6 @@ function generateLists(arrayListNames) {
     }
 }
 
-generateLists(insertLists);
-
-//Global Vars
-
-const lists = document.querySelectorAll('ul');
-let itens = document.querySelectorAll('li');
-let idItem = 0;
-const inputs = document.querySelectorAll('input');
-const btns = document.querySelectorAll('button');
-const clearbtn = document.querySelectorAll('.clear');
-const darkbtn = document.querySelector('#dark');
-let darkModeCheck = false;
-
 //getDate Function: capture and display the month and year
 
 function getDate() {
@@ -44,25 +73,21 @@ function getDate() {
     year.innerHTML = monthNames[calendar.getMonth()] + " &nbsp;&bull;&nbsp; " + calendar.getFullYear();
 }
 
-getDate();
-
 //adjustScroll Function: limit the overflow-y lists with scroll
 
 function adjustScroll() {
     const daysHeight = document.querySelector('#monday').clientHeight - 110;
     const monthHeight = document.querySelector('#month').clientHeight - 105;
     if (window.innerWidth >= 600) {
-    lists.forEach((list) => {
-        if (list.dataset['day'] == 'month') {
-            list.style.maxHeight = monthHeight + "px";
-        } else {
-            list.style.maxHeight = daysHeight + "px";
-        }
-    });
+        lists.forEach((list) => {
+            if (list.dataset['day'] == 'month') {
+                list.style.maxHeight = monthHeight + "px";
+            } else {
+                list.style.maxHeight = daysHeight + "px";
+            }
+        });
     }
 }
-
-adjustScroll();
 
 //addTodo Function: insert a item to the respective list and active other functions to renew infos
 
@@ -103,6 +128,7 @@ function addTodo(day, todo, active = false) {
                 moveItem();
                 activeCheck();
                 progressBar(day);
+                setStorageList();
             }
         });
     }
@@ -122,9 +148,8 @@ function activeCheck() {
 function handleCheck(e) {
     this.classList.toggle('checked');
     progressBar(this.dataset['day']);
+    setStorageList();
 }
-
-activeCheck();
 
 //activeBtn Function: insert the input item at the respective list with click and active other functions to renew infos
 
@@ -133,8 +158,6 @@ function activeBtn() {
         btn.addEventListener('click', handleBtn);
     });
 }
-
-activeBtn();
 
 //activeBtn callback
 
@@ -161,7 +184,6 @@ function activeDelete() {
         del.addEventListener('click', handleDel);
     });
 }
-activeDelete();
 
 //activeDelete callback
 
@@ -183,8 +205,6 @@ function moveItem() {
         back.addEventListener('click', handleMove);
     });
 }
-
-moveItem();
 
 //moveItem callback
 
@@ -247,8 +267,6 @@ function activeClearList() {
     });
 }
 
-activeClearList();
-
 //activeClearList callback
 
 function handleClear(e) {
@@ -259,6 +277,7 @@ function handleClear(e) {
             activeCheck();
         }
         progressBar(dataTemp);
+        setStorageList();
     });
 
 }
@@ -329,5 +348,49 @@ function darkMode() {
     }
 
     addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar]);
+
+}
+
+//storageList function: method that use LocalStorage to save lists in cache
+
+function setStorageList(arrayItens = itens) {
+
+    storagedItens = ['', '', '', '', '', '', '', '', ''];
+    let newId = 0;
+    insertLists.forEach((listName, i) => {
+        arrayItens.forEach((item) => {
+            let dataDay = item.dataset['day'];
+            let checkedItem = (item.classList.contains('checked')) ? 'checked' : '';
+            let content = item.innerHTML;
+
+            if (listName == item.dataset['day']) {
+                storagedItens[i] += `<li class="item ${checkedItem}" data-day="${dataDay}" data-id="${newId}"> ${content} </li>`;
+                newId++;
+                idItem++;
+            }
+        });
+    });
+
+    for (i = 0; i < insertLists.length; i++) {
+        localStorage.setItem('todos' + [i], storagedItens[i]);
+    }
+
+    localStorage.setItem('idCount', idItem);
+
+}
+
+function getStorageList(arrayItens = storagedItens) {
+
+    for (i = 0; i < lists.length; i++) {
+        lists[i].innerHTML = '';
+        arrayItens[i] = localStorage.getItem('todos' + i);
+    }
+
+    insertLists.forEach((listName, i) => {
+        lists[i].innerHTML += arrayItens[i];
+    });
+
+    idItem = localStorage.getItem('idCount');
+    startPlanner();
 
 }

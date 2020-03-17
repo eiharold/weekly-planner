@@ -165,7 +165,7 @@ form {
 }
 
 input {
-    width: 100%;
+    width: calc(100% - 20px);
     background: #eee;
     border: none;
     border-radius: none;
@@ -386,6 +386,12 @@ h2 span:hover {
 
     li.darkmode:hover {
         background: #333;
+        color: #fff;
+    }
+
+    li.darkmode.checked:hover {
+        background: rgb(192, 222, 134);
+        color: #333;
     }
 
     h2 {

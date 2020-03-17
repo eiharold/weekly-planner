@@ -21,6 +21,7 @@ let darkModeCheck = false;
 
 
 function startPlanner() {
+    
     getDate();
     adjustScroll();
     activeCheck();
@@ -28,7 +29,7 @@ function startPlanner() {
     activeDelete();
     moveItem();
     activeClearList();
-    if (darkModeCheck) { darkMode() };
+    //if (darkModeCheck) { darkMode() };
     for (i = 0; i < insertLists.length; i++) {
         progressBar(insertLists[i]);
     }
@@ -78,6 +79,7 @@ function getDate() {
 function adjustScroll() {
     const daysHeight = document.querySelector('#monday').clientHeight - 110;
     const monthHeight = document.querySelector('#month').clientHeight - 105;
+
     if (window.innerWidth >= 600) {
         lists.forEach((list) => {
             if (list.dataset['day'] == 'month') {
@@ -316,6 +318,10 @@ function progressBar(day) {
 darkbtn.addEventListener('click', darkMode);
 
 function darkMode() {
+    
+    if(localStorage.getItem('dark') != null && localStorage.getItem('dark') != undefined) {
+        darkModeCheck = localStorage.getItem('dark');
+    }
 
     darkbtn.classList.toggle('darkmode-active');
     let body = document.querySelector('body');
@@ -348,7 +354,7 @@ function darkMode() {
     }
 
     addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar]);
-
+    localStorage.setItem('dark', darkModeCheck);
 }
 
 //storageList function: method that use LocalStorage to save lists in cache
@@ -376,6 +382,7 @@ function setStorageList(arrayItens = itens) {
     }
 
     localStorage.setItem('idCount', idItem);
+    localStorage.setItem('dark', darkModeCheck);
 
 }
 
@@ -392,5 +399,4 @@ function getStorageList(arrayItens = storagedItens) {
 
     idItem = localStorage.getItem('idCount');
     startPlanner();
-
 }

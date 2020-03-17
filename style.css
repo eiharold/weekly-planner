@@ -137,6 +137,7 @@ ul {
 /* width */
 ::-webkit-scrollbar {
     width: 5px;
+    height: 5px;
     border-radius: 10px;
   }
   
@@ -229,6 +230,14 @@ li {
     margin: 4px 0;
     border-radius: 10px;
     font-size: 14px;
+    overflow-wrap: break-word;
+}
+
+li span:first-child {
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    max-width: calc(20vw - 100px);
+    padding: 2px 5px;
 }
 
 li.darkmode {

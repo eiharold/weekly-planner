@@ -89,6 +89,9 @@ function adjustScroll() {
             }
         });
     }
+
+    const maxWidthMobile = window.innerWidth;
+    
 }
 
 //addTodo Function: insert a item to the respective list and active other functions to renew infos

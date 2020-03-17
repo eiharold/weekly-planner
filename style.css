@@ -403,6 +403,13 @@ h2 span:hover {
         color: #333;
     }
 
+    li span:first-child {
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+        max-width: calc(100vw - 150px);
+        padding: 2px 5px;
+    }
+
     h2 {
         font-size: 21px;
     }

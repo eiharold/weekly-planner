@@ -355,6 +355,7 @@ function darkMode() {
 
     addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar]);
     localStorage.setItem('dark', darkModeCheck);
+    setStorageList();
 }
 
 //storageList function: method that use LocalStorage to save lists in cache
@@ -399,4 +400,9 @@ function getStorageList(arrayItens = storagedItens) {
 
     idItem = localStorage.getItem('idCount');
     startPlanner();
+
+    if (localStorage.getItem('dark') == 'true') {
+        darkMode();
+    }
+
 }

@@ -406,7 +406,7 @@ h2 span:hover {
     li span:first-child {
         overflow-wrap: break-word;
         word-wrap: break-word;
-        max-width: calc(100vw - 150px);
+        max-width: calc(100vw - 160px);
         padding: 2px 5px;
     }
 

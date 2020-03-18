@@ -21,7 +21,7 @@ let darkModeCheck = false;
 
 
 function startPlanner() {
-    
+
     getDate();
     adjustScroll();
     activeCheck();
@@ -29,6 +29,7 @@ function startPlanner() {
     activeDelete();
     moveItem();
     activeClearList();
+    itemIconsDisplay();
     //if (darkModeCheck) { darkMode() };
     for (i = 0; i < insertLists.length; i++) {
         progressBar(insertLists[i]);
@@ -91,7 +92,7 @@ function adjustScroll() {
     }
 
     const maxWidthMobile = window.innerWidth;
-    
+
 }
 
 //addTodo Function: insert a item to the respective list and active other functions to renew infos
@@ -132,6 +133,7 @@ function addTodo(day, todo, active = false) {
                 activeDelete();
                 moveItem();
                 activeCheck();
+                itemIconsDisplay();
                 progressBar(day);
                 setStorageList();
             }
@@ -275,16 +277,33 @@ function activeClearList() {
 //activeClearList callback
 
 function handleClear(e) {
-    let dataTemp = this.dataset['day'];
-    itens.forEach((item) => {
-        if (dataTemp === item.dataset['day']) {
-            item.remove();
-            activeCheck();
-        }
-        progressBar(dataTemp);
-        setStorageList();
-    });
+    var confirmation = confirm('Are you sure?');
+    if (confirmation) {
+        let dataTemp = this.dataset['day'];
+        itens.forEach((item) => {
+            if (dataTemp === item.dataset['day']) {
+                item.remove();
+                activeCheck();
+            }
+            progressBar(dataTemp);
+            setStorageList();
+        });
+    }
+}
 
+//itemIconsDisplay Function - Hide Item icons when the mouse isn't over the item
+
+function itemIconsDisplay() {
+    itens.forEach( (item) => {
+        item.addEventListener('mouseover', (e) => {
+            const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
+            thisItemKit.style.display = "flex";
+        });
+        item.addEventListener('mouseout', (e) => {
+            const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
+            thisItemKit.style.display = "none";
+        });
+    });
 }
 
 //progressBar Function: control the progress bar of each list
@@ -321,8 +340,8 @@ function progressBar(day) {
 darkbtn.addEventListener('click', darkMode);
 
 function darkMode() {
-    
-    if(localStorage.getItem('dark') != null && localStorage.getItem('dark') != undefined) {
+
+    if (localStorage.getItem('dark') != null && localStorage.getItem('dark') != undefined) {
         darkModeCheck = localStorage.getItem('dark');
     }
 

@@ -257,7 +257,7 @@ li:hover {
 }
 
 .itemicons {
-    display: flex;
+    display: none;
 }
 
 .delete {
@@ -430,5 +430,9 @@ h2 span:hover {
         font-size: 16px;
         padding-left: 10px;
         padding-right: 10px;
+    }
+
+    .itemicons {
+        display: flex;
     }
 }

@@ -352,6 +352,7 @@ function darkMode() {
     let linkCredits = document.querySelector('.container-credits a');
     let valueDarkBtn = darkbtn.classList.value;
     let wrapbar = document.querySelectorAll('.wrapbar');
+    let notes = document.querySelector('#notes');
 
     if (valueDarkBtn == 'darkmode-active') {
         darkbtn.innerHTML = '<i class="fas fa-lightbulb"></i> Light Mode';
@@ -375,7 +376,7 @@ function darkMode() {
         });
     }
 
-    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar]);
+    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar, notes, notes]);
     localStorage.setItem('dark', darkModeCheck);
     setStorageList();
 }

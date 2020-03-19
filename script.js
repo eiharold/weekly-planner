@@ -16,10 +16,12 @@ const clearallbtn = document.querySelector('#clearall');
 const maximizeallbtn = document.querySelector('#maxall');
 const filterbtn = document.querySelector('#filter');
 const darkbtn = document.querySelector('#dark');
+let wrapMenu = document.querySelector('#wrap-menu');
 let daysHeight = document.querySelector('#monday').clientHeight - 110;
 let monthHeight = document.querySelector('#month').clientHeight - 105;
 let itens = document.querySelectorAll('li');
 let idItem = 0;
+let mode = "all";
 let storagedItens = ['', '', '', '', '', '', '', '', ''];
 let darkModeCheck = false;
 
@@ -170,14 +172,22 @@ function maximizeAll() {
     let isLong = true;
     maximizeallbtn.addEventListener('click', () => {
         if (isLong) {
-            maximizeallbtn.classList.add('gray');
+            if (wrapMenu.classList.contains('darkmode')) {
+                maximizeallbtn.classList.add('black');
+            } else {
+                maximizeallbtn.classList.add('gray');
+            }
             main.style.height = "100%";
             lists.forEach((list) => {
                 list.style.maxHeight = "";
             });
             isLong = false;
         } else {
-            maximizeallbtn.classList.remove('gray');
+            if (wrapMenu.classList.contains('darkmode')) {
+                maximizeallbtn.classList.remove('black');
+            } else {
+                maximizeallbtn.classList.remove('gray');
+            }
             main.style.height = "calc(100vh - 158px)";
             adjustScroll();
             isLong = true;
@@ -360,42 +370,47 @@ function handleMove(e) {
 //filterList Function: add the functionality to filter a list through checked and non-checked itens
 
 function filterList() {
-    let mode = "all";
+    filterbtn.removeEventListener('click', handleFilterList);
+    filterbtn.addEventListener('click', handleFilterList);
+}
+
+//filterList callback
+
+function handleFilterList(e) {
+
     const notChecked = document.querySelectorAll('li:not(.checked)');
     const checkedItens = document.querySelectorAll('.checked');
 
-    filterbtn.addEventListener('click', () => {
-        if (mode == "all") {
-            notChecked.forEach((item) => {
-                item.style.display = "none";
-            });
-            checkedItens.forEach((item) => {
-                item.style.display = "flex";
-            });
-            filterbtn.classList.remove('gray');
-            filterbtn.classList.add('green');
-            mode = "noncheckeds";
-        } else if (mode == "noncheckeds") {
-            notChecked.forEach((item) => {
-                item.style.display = "flex";
-            });
-            checkedItens.forEach((item) => {
-                item.style.display = "none";
-            });
-            filterbtn.classList.remove('green');
-            filterbtn.classList.add('gray');
-            mode = "checkeds";
-        } else {
-            notChecked.forEach((item) => {
-                item.style.display = "flex";
-            });
-            checkedItens.forEach((item) => {
-                item.style.display = "flex";
-            });
-            filterbtn.classList.remove('gray');
-            mode = "all";
-        }
-    });
+    if (mode == "all") {
+        notChecked.forEach((item) => {
+            item.style.display = "none";
+        });
+        checkedItens.forEach((item) => {
+            item.style.display = "flex";
+        });
+        filterbtn.classList.remove('gray');
+        filterbtn.classList.add('green');
+        mode = "noncheckeds";
+    } else if (mode == "noncheckeds") {
+        notChecked.forEach((item) => {
+            item.style.display = "flex";
+        });
+        checkedItens.forEach((item) => {
+            item.style.display = "none";
+        });
+        filterbtn.classList.remove('green');
+        filterbtn.classList.add('gray');
+        mode = "checkeds";
+    } else {
+        notChecked.forEach((item) => {
+            item.style.display = "flex";
+        });
+        checkedItens.forEach((item) => {
+            item.style.display = "flex";
+        });
+        filterbtn.classList.remove('gray');
+        mode = "all";
+    }
 }
 
 //activeClearList Function: add the functionality to clear a list to the respective button
@@ -502,7 +517,6 @@ function darkMode() {
     let body = document.querySelector('body');
     let containerTitle = document.querySelector('.container-title');
     let wrap = document.querySelectorAll('.wrap');
-    let wrapMenu = document.querySelector('#wrap-menu');
     let linkCredits = document.querySelector('.container-credits a');
     let valueDarkBtn = darkbtn.classList.contains('darkmode-active');
     let wrapbar = document.querySelectorAll('.wrapbar');

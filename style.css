@@ -402,10 +402,20 @@ h2 .clear:hover {
 
 #filter.menuitem.green {
     background: rgb(192, 222, 134);
+    color: #000;
 }
 
 #filter.menuitem.gray, #maxall.menuitem.gray {
     background: #ddd;
+    color: #000;
+}
+
+.darkmode #filter.menuitem:hover, .darkmode #maxall.menuitem:hover {
+    color: #ddd;
+}
+
+#filter.menuitem.black, #maxall.menuitem.black {
+    background: #444;
 }
 
 h2 .titleList {

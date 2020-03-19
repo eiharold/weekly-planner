@@ -462,16 +462,23 @@ function handleClearAll(e) {
 //itemIconsDisplay Function - Hide Item icons when the mouse isn't over the item
 
 function itemIconsDisplay() {
-    itens.forEach((item) => {
-        item.addEventListener('mouseover', (e) => {
-            const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
-            thisItemKit.style.display = "flex";
+    if (window.innerWidth < 1024) {
+        itens.forEach((item) => {
+            const itemKit = document.querySelector(`.itemicons`);
+            itemKit.style.display = "flex";
         });
-        item.addEventListener('mouseout', (e) => {
-            const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
-            thisItemKit.style.display = "none";
+    } else {
+        itens.forEach((item) => {
+            item.addEventListener('mouseover', (e) => {
+                const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
+                thisItemKit.style.display = "flex";
+            });
+            item.addEventListener('mouseout', (e) => {
+                const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
+                thisItemKit.style.display = "none";
+            });
         });
-    });
+    }
 }
 
 //progressBar Function: control the progress bar of each list

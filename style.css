@@ -530,7 +530,7 @@ h2 .titleList {
         padding-right: 10px;
     }
 
-    .itemicons {
+    .itemicons, li.checked.itemicons {
         display: flex;
     }
 

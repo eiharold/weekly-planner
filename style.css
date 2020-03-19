@@ -318,7 +318,7 @@ li:hover {
     transition: ease-in-out .2s;
 }
 
-.itemicons, li.checked.itemicons {
+.itemicons {
     display: none;
 }
 
@@ -530,7 +530,7 @@ h2 .titleList {
         padding-right: 10px;
     }
 
-    .itemicons, li.checked.itemicons {
+    .itemicons {
         display: flex;
     }
 

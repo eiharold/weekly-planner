@@ -2,6 +2,7 @@
 
 //CONFIG AND ACTIVATING MAIN FUNCTION
 
+const main = document.querySelector('.main');
 const insertLists = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday', 'notes', 'month'];
 generateLists(insertLists);
 
@@ -11,7 +12,12 @@ const lists = document.querySelectorAll('ul');
 const inputs = document.querySelectorAll('input');
 const btns = document.querySelectorAll('button');
 const clearbtn = document.querySelectorAll('.clear');
+const clearallbtn = document.querySelector('#clearall');
+const maximizeallbtn = document.querySelector('#maxall');
+const filterbtn = document.querySelector('#filter');
 const darkbtn = document.querySelector('#dark');
+let daysHeight = document.querySelector('#monday').clientHeight - 110;
+let monthHeight = document.querySelector('#month').clientHeight - 105;
 let itens = document.querySelectorAll('li');
 let idItem = 0;
 let storagedItens = ['', '', '', '', '', '', '', '', ''];
@@ -29,8 +35,11 @@ function startPlanner() {
     activeDelete();
     moveItem();
     activeClearList();
+    activeClearAll();
     itemIconsDisplay();
-    //if (darkModeCheck) { darkMode() };
+    maximizeList();
+    maximizeAll();
+    filterList();
     for (i = 0; i < insertLists.length; i++) {
         progressBar(insertLists[i]);
     }
@@ -47,23 +56,49 @@ if (localStorage.getItem('idCount')) {
 //Main function - HTML Constructor
 
 function generateLists(arrayListNames) {
-    const main = document.querySelector('.main');
-    for (i = 0; i < arrayListNames.length; i++) {
-        main.innerHTML += `<div class="wrap" id="${arrayListNames[i]}">
+
+    function template(before, i, after) {
+        return `
+        ${before}
+        <div class="wrap" id="${i}">
             <div class="content">
-                <h2>${arrayListNames[i]}<span class="clear" contenteditable="false" data-day="${arrayListNames[i]}">Clear</span></h2>
+                <h2><span class="titleList">${i}</span><span class="clear" contenteditable="false" data-day="${i}">Clear</span></span></h2>
                 <div class="wrapbar">
-                    <div class="progressbar" data-day="${arrayListNames[i]}"></div>
+                    <div class="progressbar" data-day="${i}"></div>
                 </div>
-                <ul class="list" data-day="${arrayListNames[i]}">
+                <ul class="list" data-day="${i}">
                 </ul>
             </div>
-            <form action="todo" data-day="${arrayListNames[i]}">
-                <input type="text" name="input" autocomplete="off" data-day="${arrayListNames[i]}" placeholder="Add your To do...">
-                <button type="submit" data-day="${arrayListNames[i]}"><i class="fas fa-plus"></i></button>
+            <form action="todo" data-day="${i}">
+                <input type="text" name="input" autocomplete="off" data-day="${i}" placeholder="Add your To do...">
+                <button type="submit" data-day="${i}"><i class="fas fa-plus"></i></button>
             </form>
-            </div>`;
+        </div>
+        ${after}`;
     }
+
+    for (i = 0; i < arrayListNames.length - 1; i++) {
+        main.innerHTML += template('', arrayListNames[i], '</div>');
+    }
+
+    //Generate last column, with Month and Menu
+
+    main.innerHTML += template('<div class="lastcolumn">', arrayListNames[arrayListNames.length - 1], `
+        <section id="wrap-menu">
+            <nav class="menu">
+                <div class="menuitem" id="filter"><i class="fas fa-adjust"></i></div>
+                <div class="menuitem" id="maxall"><i class="fas fa-arrows-alt-v"></i></div>
+                <div class="menuitem" id="clearall"><i class="fas fa-trash-alt"></i></div>
+                <div class="menuitem" id="dark"><i class="fas fa-lightbulb"></i></div>
+            </nav>   
+        </section>
+    </div>`);
+
+    const wraps = document.querySelectorAll('.wrap');
+    wraps.forEach((wrap, i) => {
+        wrap.style.gridArea = arrayListNames[i];
+    });
+    ;
 }
 
 //getDate Function: capture and display the month and year
@@ -78,9 +113,6 @@ function getDate() {
 //adjustScroll Function: limit the overflow-y lists with scroll
 
 function adjustScroll() {
-    const daysHeight = document.querySelector('#monday').clientHeight - 110;
-    const monthHeight = document.querySelector('#month').clientHeight - 105;
-
     if (window.innerWidth >= 600) {
         lists.forEach((list) => {
             if (list.dataset['day'] == 'month') {
@@ -93,6 +125,64 @@ function adjustScroll() {
 
     const maxWidthMobile = window.innerWidth;
 
+}
+
+//maximizeList Function: click in the list title to maximize/minimize list size
+
+function maximizeList() {
+    const listTitles = document.querySelectorAll('.titleList');
+    let isLong = true;
+    listTitles.forEach((title, i) => {
+        const contentTitle = title.innerHTML;
+        title.addEventListener('click', (title) => {
+            if (i < 4) {
+                if (isLong) {
+                    lists.forEach((list, i) => {
+                        if (i < 4) {
+                            list.style.maxHeight = "";
+                        }
+                    });
+                    isLong = false;
+                } else {
+                    adjustScroll();
+                    isLong = true;
+                }
+            } else {
+                if (isLong) {
+                    lists.forEach((list, i) => {
+                        if (i > 4) {
+                            list.style.maxHeight = "";
+                        }
+                    });
+                    isLong = false;
+                } else {
+                    adjustScroll();
+                    isLong = true;
+                }
+            }
+        });
+    });
+}
+
+//maximizeAll Function: maximize/minimize all list sizes
+
+function maximizeAll() {
+    let isLong = true;
+    maximizeallbtn.addEventListener('click', () => {
+        if (isLong) {
+            maximizeallbtn.classList.add('gray');
+            main.style.height = "100%";
+            lists.forEach((list) => {
+                list.style.maxHeight = "";
+            });
+            isLong = false;
+        } else {
+            maximizeallbtn.classList.remove('gray');
+            main.style.height = "calc(100vh - 158px)";
+            adjustScroll();
+            isLong = true;
+        }
+    });
 }
 
 //addTodo Function: insert a item to the respective list and active other functions to renew infos
@@ -134,6 +224,7 @@ function addTodo(day, todo, active = false) {
                 moveItem();
                 activeCheck();
                 itemIconsDisplay();
+                filterList();
                 progressBar(day);
                 setStorageList();
             }
@@ -266,6 +357,47 @@ function handleMove(e) {
     }
 }
 
+//filterList Function: add the functionality to filter a list through checked and non-checked itens
+
+function filterList() {
+    let mode = "all";
+    const notChecked = document.querySelectorAll('li:not(.checked)');
+    const checkedItens = document.querySelectorAll('.checked');
+
+    filterbtn.addEventListener('click', () => {
+        if (mode == "all") {
+            notChecked.forEach((item) => {
+                item.style.display = "none";
+            });
+            checkedItens.forEach((item) => {
+                item.style.display = "flex";
+            });
+            filterbtn.classList.remove('gray');
+            filterbtn.classList.add('green');
+            mode = "noncheckeds";
+        } else if (mode == "noncheckeds") {
+            notChecked.forEach((item) => {
+                item.style.display = "flex";
+            });
+            checkedItens.forEach((item) => {
+                item.style.display = "none";
+            });
+            filterbtn.classList.remove('green');
+            filterbtn.classList.add('gray');
+            mode = "checkeds";
+        } else {
+            notChecked.forEach((item) => {
+                item.style.display = "flex";
+            });
+            checkedItens.forEach((item) => {
+                item.style.display = "flex";
+            });
+            filterbtn.classList.remove('gray');
+            mode = "all";
+        }
+    });
+}
+
 //activeClearList Function: add the functionality to clear a list to the respective button
 
 function activeClearList() {
@@ -291,10 +423,31 @@ function handleClear(e) {
     }
 }
 
+//activeClearAll Function: add the functionality to clear all lists to the respective button
+
+function activeClearAll() {
+    clearallbtn.addEventListener('click', handleClearAll);
+}
+
+//activeClearList callback
+
+function handleClearAll(e) {
+    var confirmation = confirm('Are you sure?');
+    if (confirmation) {
+        itens.forEach((item) => {
+            const dataTemp = item.dataset.day;
+            item.remove();
+            activeCheck();
+            progressBar(dataTemp);
+            setStorageList();
+        });
+    }
+}
+
 //itemIconsDisplay Function - Hide Item icons when the mouse isn't over the item
 
 function itemIconsDisplay() {
-    itens.forEach( (item) => {
+    itens.forEach((item) => {
         item.addEventListener('mouseover', (e) => {
             const thisItemKit = document.querySelector(`.item[data-id='${item.dataset.id}'] .itemicons`);
             thisItemKit.style.display = "flex";
@@ -349,16 +502,16 @@ function darkMode() {
     let body = document.querySelector('body');
     let containerTitle = document.querySelector('.container-title');
     let wrap = document.querySelectorAll('.wrap');
+    let wrapMenu = document.querySelector('#wrap-menu');
     let linkCredits = document.querySelector('.container-credits a');
-    let valueDarkBtn = darkbtn.classList.value;
+    let valueDarkBtn = darkbtn.classList.contains('darkmode-active');
     let wrapbar = document.querySelectorAll('.wrapbar');
     let notes = document.querySelector('#notes');
-
-    if (valueDarkBtn == 'darkmode-active') {
-        darkbtn.innerHTML = '<i class="fas fa-lightbulb"></i> Light Mode';
+    if (valueDarkBtn) {
+        darkbtn.innerHTML = '<i class="far fa-lightbulb"></i>';
         darkModeCheck = true;
     } else {
-        darkbtn.innerHTML = '<i class="far fa-lightbulb"></i> Dark Mode';
+        darkbtn.innerHTML = '<i class="fas fa-lightbulb"></i>';
         darkModeCheck = false;
     }
 
@@ -376,7 +529,7 @@ function darkMode() {
         });
     }
 
-    addDark([body, containerTitle, wrap, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar, notes, notes]);
+    addDark([body, containerTitle, wrap, wrapMenu, itens, inputs, btns, clearbtn, linkCredits, darkbtn, wrapbar, notes, notes]);
     localStorage.setItem('dark', darkModeCheck);
     setStorageList();
 }

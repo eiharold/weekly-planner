@@ -16,7 +16,6 @@ body.darkmode {
 }
 
 .container-title {
-    grid-area: header;
     text-align: center;
     padding: 10px;
     border: 1px solid #333;
@@ -52,9 +51,86 @@ h2 {
     margin: 10px;
     height: calc(100vh - 158px);
     grid-template:
-    "a b c d e" 1fr
-    "f g h i e" 1fr
+    "monday tuesday wednesday thursday lastcolumn" 1fr
+    "friday saturday sunday notes lastcolumn" 1fr
     / 1fr 1fr 1fr 1fr 1fr;
+}
+
+.lastcolumn {
+    grid-area: lastcolumn;
+    display: grid;
+    grid-gap: 10px;
+    height: calc(100vh - 158px);
+    height: 100%;
+    grid-template:
+    "month" 7fr
+    "menu" 1fr
+    / 1fr;
+}
+
+#wrap-menu {
+    grid-area: menu;
+    color: #000;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-radius: 10px;
+    border: 1px solid #fff;
+    box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.02);
+    z-index: 100;
+}
+
+#wrap-menu.darkmode {
+    background: #222;
+    border: 1px solid #eee;
+}
+
+#wrap-menu .menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    height: 100%;
+}
+
+#wrap-menu .menuitem {
+    width: 100%;
+    padding: 5px;
+    background: #eee;
+    text-align: center;
+    transition: ease-in-out .2s;
+    color: #333;
+    font-size: 16px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#wrap-menu.darkmode .menuitem {
+    
+    background: #000;
+    text-align: center;
+    color: #ddd;
+}
+
+#wrap-menu .menuitem:first-child {
+    border-radius: 8px 0px 0px 8px;
+}
+
+#wrap-menu .menuitem:last-child {
+    border-radius: 0px 8px 8px 0px;
+}
+
+#wrap-menu .menuitem:hover {
+    background: #ddd;
+    transition: ease-in-out .2s;
+    cursor: pointer;
+}
+
+#wrap-menu.darkmode .menuitem:hover {
+    background: #333;
 }
 
 .container-credits {
@@ -84,23 +160,8 @@ h2 {
     color: yellow;
 }
 
-#dark {
-    text-decoration: none;
-    color: #fff;
-    background: #999;
-    border-radius: 8px;
-    padding: 0 8px;
-    transition: ease-in-out .2s;
-}
-
-#dark:hover {
-    background: #666;
-    transition: ease-in-out .2s;
-    cursor: pointer;
-}
-
-#dark.darkmode {
-    background: #fff;
+#wrap-menu.darkmode .menuitem#dark.darkmode {
+    background: rgb(252, 252, 77);
     color: #000;
     transition: ease-in-out .2s;
 }
@@ -109,10 +170,6 @@ h2 {
     background: yellow;
     transition: ease-in-out .2s;
     cursor: pointer;
-}
-
-#month {
-    grid-area: e;
 }
 
 ul {
@@ -127,6 +184,7 @@ ul {
     border-radius: 10px;
     border: 1px solid #fff;
     box-shadow: 0px 2px 2px 2px rgba(0,0,0,0.02);
+    z-index: 100;
 }
 
 .wrap.darkmode {
@@ -260,7 +318,7 @@ li:hover {
     transition: ease-in-out .2s;
 }
 
-.itemicons {
+.itemicons, li.checked.itemicons {
     display: none;
 }
 
@@ -303,6 +361,10 @@ li:hover {
     border-radius: 8px 0 0 8px;
 }
 
+.iconslist {
+    display: flex;
+}
+
 .clear {
     background: rgb(242, 242, 141);
     border-radius: 8px;
@@ -317,13 +379,38 @@ li:hover {
     color: #000;
 }
 
-h2 span:hover {
+h2 .clear:hover {
     background: rgb(250, 250, 26);
     transition: ease-in-out .2s;
     cursor: pointer;
 }
 
+.filter {
+    background: rgb(192, 222, 255);
+    border-radius: 10px;
+    padding: 3px 4px 0px 4px;
+    font-size: 8px;
+    display: block;
+    transition: ease-in-out .2s;
+    margin: 0 3px;
+    cursor: pointer;
+}
 
+.filter.darkmode {
+    color: #000;
+}
+
+#filter.menuitem.green {
+    background: rgb(192, 222, 134);
+}
+
+#filter.menuitem.gray, #maxall.menuitem.gray {
+    background: #ddd;
+}
+
+h2 .titleList {
+    cursor: pointer;
+}
 
 .wrapbar {
     height: 10px;
@@ -356,17 +443,24 @@ h2 span:hover {
         grid-gap: 20px;
         margin: 10px;
         grid-template:
-        "a"
-        "b"
-        "c"
-        "d"
-        "f"
-        "g"
-        "h"
-        "i"
-        "e"
+        "monday"
+        "tuesday"
+        "wednesday"
+        "thursday"
+        "friday"
+        "saturday"
+        "sunday"
+        "notes"
+        "lastcolumn"
         / 1fr;
         height: auto;
+    }
+
+    .lastcolumn {
+        grid-template:
+        "month" 1fr
+        "menu" 1fr
+        / 1fr;
     }
 
     input {
@@ -418,7 +512,7 @@ h2 span:hover {
         font-size: 21px;
     }
 
-    h2 span:hover {
+    h2 .clear:hover {
        background: rgb(242, 242, 141);
     }
 
@@ -438,5 +532,9 @@ h2 span:hover {
 
     .itemicons {
         display: flex;
+    }
+
+    #wrap-menu .menuitem#maxall {
+        display: none;
     }
 }
